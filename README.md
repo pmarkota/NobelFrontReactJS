@@ -18,7 +18,7 @@ Welcome to the Rock-Paper-Scissors Game! This is a simple web-based game where u
 
 ## Demo
 
-You can try out the game online at [Game Demo][(R-P-S](https://65341715cdbab40007e8e809--verdant-bonbon-649c81.netlify.app/)).
+You can try out the game online at [Game Demo][(R-P-S](https://653420ab0c0b1e0008cf1b67--verdant-bonbon-649c81.netlify.app/)).
 
 ## Getting Started
 
