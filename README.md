@@ -32,3 +32,6 @@ To run the game locally, follow these steps:
 
    ```sh
    git clone https://github.com/your-username/rock-paper-scissors.git
+   cd rock-paper-scissors
+   npm i
+   npm run dev
