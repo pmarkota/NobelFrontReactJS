@@ -22,13 +22,13 @@ Welcome to the Rock-Paper-Scissors Game! This is a simple web-based game where u
 
 ## Demo
 
-You can try out the game online at [Game Demo](https://your-game-demo-url.com).
+You can try out the game online at [Game Demo][(https://your-game-demo-url.com](https://65341715cdbab40007e8e809--verdant-bonbon-649c81.netlify.app/login)).
 
 ## Getting Started
 
 To run the game locally, follow these steps:
 
-1. Clone this repository:
+To get started:
 
    ```sh
    git clone https://github.com/your-username/rock-paper-scissors.git
