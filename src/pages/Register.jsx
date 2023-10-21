@@ -19,8 +19,7 @@ export const Register = () => {
   const registerMutation = usePlayerRegister();
   const handleRegister = async () => {
     try {
-      await registerMutation.mutateAsync({ username, password }); // Send them as an object
-      console.log(username, password);
+      await registerMutation.mutateAsync({ username, password });
       navigate("/");
     } catch (error) {
       console.error(error);

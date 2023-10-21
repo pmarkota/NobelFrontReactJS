@@ -20,7 +20,9 @@ export const Login = () => {
   const handleLogin = async () => {
     try {
       await loginMutation.mutateAsync({ username, password });
-      console.log(username, password);
+      localStorage.removeItem("wins");
+      localStorage.removeItem("losses");
+      localStorage.removeItem("ties");
       navigate("/");
     } catch (error) {
       console.error(error);

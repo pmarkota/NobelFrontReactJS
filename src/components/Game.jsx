@@ -18,15 +18,12 @@ export const Game = ({ gameStarted, setGameStarted, gameLoading }) => {
   const computerMove = localStorage.getItem("computerMove");
   const result = localStorage.getItem("result");
   const handleGamePlay = async () => {
-    console.log(selectedSign);
-
     try {
       const data = await gamePlayMutation.mutateAsync({
         gameId,
         playerId,
         userMove: selectedSign,
       });
-      console.log(computerMove);
     } catch (error) {
       console.error(error);
     }

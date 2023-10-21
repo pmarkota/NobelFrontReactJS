@@ -24,9 +24,8 @@ export const Welcome = () => {
   const gameId = localStorage.getItem("gameId");
   const handleGameStart = async () => {
     try {
-      await gameStartMutation.mutateAsync({ gameId });
+      await gameStartMutation.mutateAsync({ playerId });
       setGameStarted(true);
-      localStorage.setItem("gameId", gameStartMutation.data.gameId);
     } catch (error) {
       console.error(error);
     }
@@ -35,7 +34,7 @@ export const Welcome = () => {
   const handleGameStop = async () => {
     setGameStarted(false);
     try {
-      await gameTerminateMutation.mutateAsync({ playerId });
+      await gameTerminateMutation.mutateAsync({ gameId });
     } catch (error) {
       console.error(error);
     }

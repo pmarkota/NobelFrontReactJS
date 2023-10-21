@@ -4,7 +4,6 @@ import { useMutation } from "react-query";
 const baseApiUrl = import.meta.env.VITE_BASE_API_URL;
 
 const playerLogin = async (username, password) => {
-  console.log({ username, password });
   const response = await fetch(`${baseApiUrl}player/login`, {
     method: "POST",
     headers: {
@@ -14,7 +13,6 @@ const playerLogin = async (username, password) => {
   });
   const data = await response.json();
   if (response.ok) {
-    console.log("successful login");
     localStorage.setItem("token", data.token);
     localStorage.setItem("username", data.username);
     localStorage.setItem("id", data.id);
@@ -36,7 +34,6 @@ const playerRegister = async (username, password) => {
   });
   const data = await response.json();
   if (response.ok) {
-    console.log("successful register");
     localStorage.setItem("token", data.token);
     localStorage.setItem("username", data.username);
     localStorage.setItem("id", data.id);
@@ -57,7 +54,6 @@ const gameStart = async (playerId) => {
   });
   const data = await response.json();
   if (response.ok) {
-    console.log("Game started");
     localStorage.setItem("gameId", data.gameId);
   }
   if (response.status === 401) {
@@ -77,10 +73,8 @@ const gamePlay = async (gameId, playerId, userMove) => {
   });
   const data = await response.json();
   if (response.ok) {
-    console.log(data);
     localStorage.setItem("computerMove", data.computerMove);
     localStorage.setItem("result", data.result);
-    console.log("Game started");
   }
   if (response.status === 401) {
     throw new Error("Something went wrong while playing the game");
@@ -99,7 +93,6 @@ const gameTerminate = async (gameId) => {
   });
   const data = await response.json();
   if (response.ok) {
-    console.log("Game terminated");
   }
   if (response.status === 401) {
     throw new Error("Something went wrong while playing the game");
@@ -116,7 +109,25 @@ const playerStats = async (playerId) => {
   });
   const data = await response.json();
   if (response.ok) {
-    console.log(data);
+    if (
+      localStorage.getItem("wins") == 0 ||
+      localStorage.getItem("wins") == null
+    ) {
+      localStorage.setItem("wins", 0);
+    }
+    if (
+      localStorage.getItem("losses") == 0 ||
+      localStorage.getItem("losses") == null
+    ) {
+      localStorage.setItem("losses", 0);
+    }
+    if (
+      localStorage.getItem("ties") == 0 ||
+      localStorage.getItem("ties") == null
+    ) {
+      localStorage.setItem("ties", 0);
+    }
+
     localStorage.setItem("wins", data.wins);
     localStorage.setItem("losses", data.losses);
     localStorage.setItem("ties", data.ties);
