@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { Game } from "../components/Game";
 import { useFetcher, useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ export const Welcome = () => {
   const username = localStorage.getItem("username");
   const playerId = localStorage.getItem("id");
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     var token = localStorage.getItem("token");
     if (!token) {
       navigate("/login");
