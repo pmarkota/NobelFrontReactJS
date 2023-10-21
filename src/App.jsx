@@ -3,6 +3,7 @@ import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import { Welcome } from "./pages/Welcome";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+import { Statistics } from "./pages/Statistics";
 import { Context } from "./Context";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ function App() {
             <Route path="/" exact element={<Welcome />}></Route>
             <Route path="/login" exact element={<Login />}></Route>
             <Route path="/register" exact element={<Register />}></Route>
+            <Route path="/statistics" exact element={<Statistics />}></Route>
           </Routes>
         </BrowserRouter>
       </Context.Provider>

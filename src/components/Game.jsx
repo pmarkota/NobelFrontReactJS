@@ -2,49 +2,34 @@ import React, { useEffect, useState } from "react";
 import rock from "../assets/rock.png";
 import paper from "../assets/paper.png";
 import scissors from "../assets/scissors.png";
-import { useGamePlay, gamePlay } from "../services/api";
+import { useGamePlay } from "../services/api";
 import { motion } from "framer-motion";
-import { useMutation } from "react-query";
 
 export const Game = ({ gameStarted, setGameStarted, gameLoading }) => {
   const [selectedSign, setSelectedSign] = useState(null);
+  const [computerSign, setComputerSign] = useState(null);
+
+  const [throwCount, setThrowCount] = useState(0);
 
   const gameId = localStorage.getItem("gameId");
   const playerId = localStorage.getItem("id");
   const gamePlayMutation = useGamePlay();
 
-  const postGamePlay = useMutation(({ gameId, playerId, userMove }) =>
-    gamePlay(gameId, playerId, userMove)
-  );
-
-  const handleGamePlay = () => {
-    console.log("handlegameplay");
+  const computerMove = localStorage.getItem("computerMove");
+  const result = localStorage.getItem("result");
+  const handleGamePlay = async () => {
     console.log(selectedSign);
 
-    postGamePlay.mutate({ gameId, playerId, userMove: selectedSign });
-    if (postGamePlay.isLoading) {
-      console.log("loading");
+    try {
+      const data = await gamePlayMutation.mutateAsync({
+        gameId,
+        playerId,
+        userMove: selectedSign,
+      });
+      console.log(computerMove);
+    } catch (error) {
+      console.error(error);
     }
-    if (postGamePlay.isSuccess) {
-      console.log(postGamePlay.data);
-    }
-    if (postGamePlay.isError) {
-      console.log(postGamePlay.error);
-    }
-
-    // try {
-    //   await gamePlayMutation.mutateAsync({
-    //     gameId,
-    //     playerId,
-    //     userMove: selectedSign,
-    //   });
-
-    //   if (gamePlayMutation.isSuccess) {
-    //     console.log(gamePlayMutation.data);
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
   };
   return gameLoading ? (
     <div className="w-full mx-auto text-center py-72">
@@ -102,10 +87,43 @@ export const Game = ({ gameStarted, setGameStarted, gameLoading }) => {
       <motion.div
         className="px-3 py-2 mx-auto mt-10 text-white bg-green-400 rounded-lg shadow-lg cursor-pointer w-fit shadow-green-500 "
         whileHover={{ scale: 1.5, y: 10 }}
-        onClick={handleGamePlay}
+        onClick={() => {
+          handleGamePlay();
+          setComputerSign(computerMove);
+          setThrowCount((prev) => prev + 1);
+        }}
       >
         Throw!
       </motion.div>
+      <div>
+        <h1 className="mt-10 text-3xl font-bold text-red-500">
+          <i>...computer's move...</i>
+        </h1>
+        {throwCount > 0 && (
+          <motion.img
+            src={
+              computerMove === "rock"
+                ? rock
+                : computerMove === "paper"
+                ? paper
+                : scissors
+            }
+            alt="Computer's Move"
+            className="w-24 mx-auto mt-10"
+            initial={{ scale: 0, x: -100 }}
+            animate={{ scale: 1, x: 0 }}
+          />
+        )}
+        {throwCount > 0 && (
+          <motion.h1
+            className="mt-10 text-3xl font-bold text-black-500"
+            initial={{ scale: 0, x: -100 }}
+            animate={{ scale: 1, x: 0 }}
+          >
+            <i>...{result}...</i>
+          </motion.h1>
+        )}
+      </div>
     </div>
   );
 };

@@ -46,6 +46,26 @@ export const Navbar = () => {
             <li>
               <p
                 className="block py-5 pl-3 pr-4 text-gray-900 rounded cursor-pointer hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent "
+                onClick={() => navigate("/")}
+              >
+                <span className="px-3 py-2 text-blue-100 transition-all duration-500 ease-in-out rounded-md ring-2 hover:bg-blue-700 hover:ring-white hover:text-white hover:rounded-lg">
+                  Play
+                </span>
+              </p>
+            </li>
+            <li>
+              <p
+                className="block py-5 pl-3 pr-4 text-gray-900 rounded cursor-pointer hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent "
+                onClick={() => navigate("/statistics")}
+              >
+                <span className="px-3 py-2 text-blue-100 transition-all duration-500 ease-in-out rounded-md ring-2 hover:bg-blue-700 hover:ring-white hover:text-white hover:rounded-lg">
+                  Statistics
+                </span>
+              </p>
+            </li>
+            <li>
+              <p
+                className="block py-5 pl-3 pr-4 text-gray-900 rounded cursor-pointer hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent "
                 onClick={() => handleLogout()}
               >
                 <span className="px-3 py-2 text-blue-100 transition-all duration-500 ease-in-out rounded-md ring-2 hover:bg-blue-700 hover:ring-white hover:text-white hover:rounded-lg">

@@ -3,7 +3,7 @@ import { Navbar } from "../components/Navbar";
 import { Game } from "../components/Game";
 import { useFetcher, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useGameStart } from "../services/api";
+import { useGameStart, useGameTerminate } from "../services/api";
 
 export const Welcome = () => {
   const [showRules, setShowRules] = useState(true);
@@ -20,13 +20,13 @@ export const Welcome = () => {
   }, []);
 
   const gameStartMutation = useGameStart();
+  const gameTerminateMutation = useGameTerminate();
+  const gameId = localStorage.getItem("gameId");
   const handleGameStart = async () => {
     try {
-      await gameStartMutation.mutateAsync({ playerId });
-      if (gameStartMutation.isSuccess) {
-        setGameStarted(true);
-        localStorage.setItem("gameId", gameStartMutation.data.gameId);
-      }
+      await gameStartMutation.mutateAsync({ gameId });
+      setGameStarted(true);
+      localStorage.setItem("gameId", gameStartMutation.data.gameId);
     } catch (error) {
       console.error(error);
     }
@@ -34,6 +34,11 @@ export const Welcome = () => {
 
   const handleGameStop = async () => {
     setGameStarted(false);
+    try {
+      await gameTerminateMutation.mutateAsync({ playerId });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

@@ -58,6 +58,7 @@ const gameStart = async (playerId) => {
   const data = await response.json();
   if (response.ok) {
     console.log("Game started");
+    localStorage.setItem("gameId", data.gameId);
   }
   if (response.status === 401) {
     throw new Error("Wrong username or password");
@@ -66,7 +67,7 @@ const gameStart = async (playerId) => {
   return data;
 };
 
-export const gamePlay = async (gameId, playerId, userMove) => {
+const gamePlay = async (gameId, playerId, userMove) => {
   const response = await fetch(`${baseApiUrl}game/play`, {
     method: "POST",
     headers: {
@@ -76,6 +77,9 @@ export const gamePlay = async (gameId, playerId, userMove) => {
   });
   const data = await response.json();
   if (response.ok) {
+    console.log(data);
+    localStorage.setItem("computerMove", data.computerMove);
+    localStorage.setItem("result", data.result);
     console.log("Game started");
   }
   if (response.status === 401) {
@@ -85,6 +89,53 @@ export const gamePlay = async (gameId, playerId, userMove) => {
   return data;
 };
 
+const gameTerminate = async (gameId) => {
+  const response = await fetch(`${baseApiUrl}game/terminate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ gameId }),
+  });
+  const data = await response.json();
+  if (response.ok) {
+    console.log("Game terminated");
+  }
+  if (response.status === 401) {
+    throw new Error("Something went wrong while playing the game");
+  }
+
+  return data;
+};
+const playerStats = async (playerId) => {
+  const response = await fetch(`${baseApiUrl}game/statistics/` + playerId, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  if (response.ok) {
+    console.log(data);
+    localStorage.setItem("wins", data.wins);
+    localStorage.setItem("losses", data.losses);
+    localStorage.setItem("ties", data.ties);
+  }
+  if (response.status === 401) {
+    throw new Error("Wrong username or password");
+  }
+
+  return data;
+};
+
+export const useGameTerminate = () => {
+  const terminate = useMutation(({ gameId }) => gameTerminate(gameId));
+  return terminate;
+};
+export const usePlayerStats = () => {
+  const stats = useMutation(({ playerId }) => playerStats(playerId));
+  return stats;
+};
 export const useGamePlay = () => {
   const play = useMutation(({ gameId, playerId, userMove }) =>
     gamePlay(gameId, playerId, userMove)
