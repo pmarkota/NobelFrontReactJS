@@ -2,7 +2,7 @@
 
 Welcome to the Rock-Paper-Scissors Game! This is a simple web-based game where users can play against the computer. The game provides an entertaining way to test your luck and decision-making skills.
 
-![Game Screenshot](game-screenshot.png)
+
 
 ## Table of Contents
 - [Features](#features)
