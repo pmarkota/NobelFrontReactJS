@@ -1,37 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/favicon.png";
+import { usePlayerLogin } from "../services/api";
 
-export const LoginView = ({ baseApiUrl }) => {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+import logo from "../assets/favicon.png";
 
+export const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(`${baseApiUrl}/player/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+  useLayoutEffect(() => {
+    var token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, []);
 
-      const data = await response.json();
-      if (response.status === 200) {
-        localStorage.setItem("token", data.token);
-        navigate("/");
-      } else {
-        alert("Login failed");
-      }
+  const loginMutation = usePlayerLogin();
+  const handleLogin = async () => {
+    try {
+      await loginMutation.mutateAsync({ username, password });
+      console.log(username, password);
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
   };
 
-  return (
+  return loginMutation.isLoading ? (
+    <div>Loading</div>
+  ) : (
     <div>
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -82,12 +80,17 @@ export const LoginView = ({ baseApiUrl }) => {
                     required=""
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    onKeyDownCapture={(e) => {
+                      if (e.key === "Enter") {
+                        handleLogin();
+                      }
+                    }}
                   />
                 </div>
 
                 <button
                   className="w-full text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                  onClick={handleLogin}
+                  onClick={() => handleLogin()}
                 >
                   Sign in
                 </button>

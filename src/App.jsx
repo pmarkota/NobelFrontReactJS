@@ -1,14 +1,16 @@
 import { Fragment, useState, useEffect } from "react";
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
-import { Welcome } from "./sites/Welcome/Welcome";
-import { Register } from "./sites/NotLoggedIn/Register";
-
-import { NotLoggedIn } from "./sites/NotLoggedIn/Login";
-import { Error } from "./sites/Error/Error";
-
+import { Welcome } from "./pages/Welcome";
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
+import { Context } from "./Context";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+const queryClient = new QueryClient();
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const baseApiUrl = import.meta.env.VITE_BASE_API_URL;
+  const [baseApiUrl, setBaseApiUrl] = useState(
+    import.meta.env.VITE_BASE_API_URL
+  );
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -18,31 +20,17 @@ function App() {
   }, []);
 
   return (
-    <Fragment>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            exact
-            element={loggedIn ? <Welcome /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/register"
-            element={!loggedIn ? <Register /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/login"
-            element={
-              !loggedIn ? (
-                <NotLoggedIn baseApiUrl={baseApiUrl} />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </Fragment>
+    <QueryClientProvider client={queryClient}>
+      <Context.Provider value={[baseApiUrl]}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" exact element={<Welcome />}></Route>
+            <Route path="/login" exact element={<Login />}></Route>
+            <Route path="/register" exact element={<Register />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </Context.Provider>
+    </QueryClientProvider>
   );
 }
 
