@@ -8,10 +8,6 @@ Welcome to the Rock-Paper-Scissors Game! This is a simple web-based game where u
 - [Features](#features)
 - [Demo](#demo)
 - [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
