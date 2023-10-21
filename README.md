@@ -1,8 +1,33 @@
-# React + Vite
+# Rock-Paper-Scissors Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Rock-Paper-Scissors Game! This is a simple web-based game where users can play against the computer. The game provides an entertaining way to test your luck and decision-making skills.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## Table of Contents
+- [Features](#features)
+- [Demo](#demo)
+- [Getting Started](#getting-started)
+
+## Features
+
+- Play Rock-Paper-Scissors against the computer.
+- View your game statistics.
+- Simple and intuitive user interface.
+- Responsive design for various screen sizes.
+
+## Demo
+
+You can try out the game online at [Game Demo][(R-P-S](https://65341715cdbab40007e8e809--verdant-bonbon-649c81.netlify.app/)).
+
+## Getting Started
+
+To run the game locally, follow these steps:
+
+To get started:
+
+   ```sh
+   git clone https://github.com/your-username/rock-paper-scissors.git
+   cd rock-paper-scissors
+   npm i
+   npm run dev
